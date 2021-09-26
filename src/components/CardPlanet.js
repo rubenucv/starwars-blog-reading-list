@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../store/appContext';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-const CardPlanet = (props) => {
+const CardPlanet = () => {
     const { store, actions } = useContext(Context);
+    const params = useParams();
+
+    useEffect(() => {
+        actions.getPlanetainfo(params.id)
+    }, [])
 
     return (
 
@@ -11,12 +16,12 @@ const CardPlanet = (props) => {
             <div className="card">
                 <img src="http://placehold.it/400x300" className="card-img-top" alt="..." />
                 <div className="card-body">
-                    <h5 className="card-title">{props.data}</h5>
+                    <h5 className="card-title">{store.info.name}</h5>
                     <p className="card-text">
-                        <p>Climate: {props.climate}</p>
-                        <p>Terrain: {props.terrain}</p>
-                        <p>Orbital Period: {props.orbital_period}</p>
-                        <p>Population: {props.population}</p>
+                        <p>Climate: {store.info.climate}</p>
+                        <p>Terrain: {store.info.terrain}</p>
+                        <p>Orbital Period: {store.info.orbital_period}</p>
+                        <p>Population: {store.info.population}</p>
                     </p>
 
                     <div className="d-flex justify-content-between">

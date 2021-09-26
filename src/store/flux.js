@@ -5,8 +5,8 @@ export const getState = ({ setStore, getStore, getActions }) => {
             characters: [],
             planets: [],
             vehicle: [],
-            planetid: []
-        
+            info: {}
+
         },
         actions: {
 
@@ -17,7 +17,7 @@ export const getState = ({ setStore, getStore, getActions }) => {
                 setStore({ favorites: updatedFavorites });
             },
 
-           
+
 
             deleteElement: (indice) => {
                 const store = getStore();
@@ -32,12 +32,28 @@ export const getState = ({ setStore, getStore, getActions }) => {
                 });
             },
 
+
+            getInfo: (data) => {
+                setStore({ info: data })
+            },
+
             getCharacters: () => {
                 fetch("https://swapi.dev/api/people/", {
                     method: "GET",
                     headers: { "Content-Type": "application/json" }
                 }).then(response => response.json())
                     .then(data => setStore({ characters: data.results }))
+            },
+
+            getPeopleinfo: (peo) => {
+                const actions = getActions();
+                let url = 'https://swapi.dev/api/people/' + peo;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        actions.getInfo(data);
+                    })
             },
 
             getPlanets: () => {
@@ -48,13 +64,16 @@ export const getState = ({ setStore, getStore, getActions }) => {
                     .then(data => setStore({ planets: data.results }))
             },
 
-            getPlanetid: (url) => {
-                fetch(url, {
-                    method: "GET",
-                    headers: { "Content-Type": "application/json" }
-                }).then(response => response.json())
-                    .then(data => setStore({ planetid: data.results }))
+            getPlanetainfo: (inf) => {
+                const actions = getActions();
+                let url = 'https://swapi.dev/api/planets/' + inf;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        actions.getInfo(data);
+                    })
             },
+
 
             getVehicles: () => {
                 fetch("https://swapi.dev/api/vehicles/", {
@@ -62,6 +81,17 @@ export const getState = ({ setStore, getStore, getActions }) => {
                     headers: { "Content-Type": "application/json" }
                 }).then(response => response.json())
                     .then(data => setStore({ vehicle: data.results }))
+            },
+
+            getVehiclesinfo: (veh) => {
+                const actions = getActions();
+                let url = 'https://swapi.dev/api/starships/' + veh;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        actions.getInfo(data);
+                    })
             }
         },
     };
