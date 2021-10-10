@@ -18,7 +18,7 @@ const CardVehicles = (props) => {
                         <p>Manufacturer: {props.manufacturer}</p>
                     </p>
                     <div className="d-flex justify-content-between">
-                    <Link to={`/profile/vehicle/${props.url.match(/\d/g)}`} className="btn btn-outline-primary">Learn More!</Link>
+                    <Link to={`/profile/vehicle/${props.url.match(/\d+/g)}`} className="btn btn-outline-primary">Learn More!</Link>
                         <button onClick={()=> actions.addFavorite(props.data)} type="button" className="btn btn-outline-warning"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
